@@ -1,0 +1,28 @@
+.wrapper
+{
+  display : table;
+}
+
+.row
+{
+  display : table-row;
+}
+
+.cell
+{
+  display : table-cell;
+  border  : 1px solid gray;
+  padding : 0.2em;
+}
+
+.caption
+{
+  width       : 25%;
+  font-weight : bold;
+  text-align  : center;
+}
+
+canvas
+{
+  border : 1px solid gray;
+}
