@@ -28,7 +28,6 @@ init = function()
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
   setInterval( "draw()", g_dtDraw );
-  setInterval( "update( g_dtUpdate / 1000 )", g_dtUpdate );
 }
 
 
@@ -94,8 +93,3 @@ draw = function()
   ctx.restore();
 }
 
-
-/* Update objects' properties with a dt timestep */
-update = function( dt )
-{
-}
