@@ -17,17 +17,23 @@ init = function()
   /* Wonderful html world */
   h_canvas = document.getElementById( "mainCanvas" );
 
+  /* constants */
+  REFRESH_RATE = 33;  // ms
+  MOUSE_T_OUT  = 750;
+
   /* field's constants */
   f_W      = h_canvas.width;
   f_H      = h_canvas.height;
-
-  m_timer  = 0;
 
   h_canvas.addEventListener( "mousedown", onMouseDown, false );
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
-  setInterval( "draw()", g_dtDraw );
+  setInterval( "draw()", REFRESH_RATE );
+
+  transition = new PlopTransition( 1000 );
+
+  transition.Toggle();
 }
 
 
@@ -36,7 +42,9 @@ onMouseDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  g_m_timer = setTimeout( "mouseMoveTimeout()", g_M_T_OUT );
+  g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
+
+  transition.Toggle();
 }
 
 onMouseUp = function( evt )
@@ -89,6 +97,10 @@ draw = function()
   ctx.save();
 
   ctx.clearRect( 0, 0, f_W, f_H );
+
+  ctx.fillStyle = "rgba( 0, 0, 0, " + transition.level + " )";
+
+  ctx.fillRect( 0, 0, f_W, f_H );
 
   ctx.restore();
 }
