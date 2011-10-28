@@ -15,3 +15,4 @@ plop (create) nodes and then move and connect them.
  * select node
  * connect two nodes, during or after creation of the node
  * disconnect nodes
+ * save and load graphes locally
