@@ -3,7 +3,7 @@
  */
 
 /* Some guidelines I try to stick with :
- * 
+ *
  * - variables declarations are sorted between the different objects (ball,
  * field, ...) and the variable name is prefixed accordingly
  * - local variables may not use prefixes
@@ -29,13 +29,37 @@ init = function()
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
+  nodes = new Array( 0 );
+  arcs  = new Array( 0 );
+
+  // Variables handling state of the UI
+  mode            = "DoingNothing"; // can be "Dragging" or "Drawing" also
+  selectedNodeIdx = -1;
+  draggedNodeIdx  = -1;
+
+  // Variables for handling mouse inputs
+  mouseDownPos = { X : 0, Y : 0 };
+  curMousePos  = { X : 0, Y : 0 };
+
   setInterval( "draw()", REFRESH_RATE );
-
-  transition = new PlopTransition( 1000 );
-
-  transition.Toggle();
 }
 
+
+/* given a point tells if there is a node there. Return node index or -1 if
+ * there is nobody
+ */
+WhatNodeIsHere = function( point )
+{
+  for( i = 0 ; i < nodes.length ; i++ )
+  {
+    if( nodes[ i ].IsInNode( point ) )
+    {
+      return i;
+    }
+  }
+
+  return -1;
+}
 
 /* mouse events handlers */
 onMouseDown = function( evt )
@@ -44,16 +68,74 @@ onMouseDown = function( evt )
 
   g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
 
-  transition.Toggle();
+  draggedNodeIdx = WhatNodeIsHere( cursorPostion );
+
+  if( mode == "DoingNothing" )
+  {
+    if( draggedNodeIdx != -1 )
+    {
+      mode = "Dragging";
+    }
+  }
+
+  mouseDownPos = cursorPostion;
 }
 
 onMouseUp = function( evt )
 {
+  var cursorPostion = getCursorPos( evt );
+
+  var clickedNode = WhatNodeIsHere( cursorPostion );
+
+  if( mode == "Dragging" )
+  {
+    if( cursorPostion.X == mouseDownPos.X &&
+        cursorPostion.Y == mouseDownPos.Y    )
+    {
+      mode = "Drawing";
+      selectedNodeIdx = draggedNodeIdx;
+    }
+    else
+    {
+      mode = "DoingNothing";
+    }
+  }
+  else if( mode == "Drawing" )
+  {
+    if( clickedNode != -1 )
+    {
+      arcs.push( new PlopArc( nodes[ selectedNodeIdx ],
+                              nodes[ clickedNode ]      ) );
+
+      selectedNodeIdx = clickedNode;
+    }
+    else
+    {
+      mode = "DoingNothing";
+    }
+  }
+  else if( mode == "DoingNothing" )
+  {
+    nodes.push( new PlopNode( cursorPostion.X, cursorPostion.Y ) );
+
+    /* if right click and clickedNode != -1 then delete clicked node */
+  }
 }
 
 onMouseMove = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
+
+  // if a node is being dragged around, drag it
+
+  // If a node is selected (and an arc drawn from it) then check if an arc
+  // must be added in the temporary arcs list.
+  curMousePos = cursorPostion;
+
+  if( mode == "Dragging" )
+  {
+    nodes[ draggedNodeIdx ].SetPos( cursorPostion );
+  }
 }
 
 mouseMoveTimeout = function()
@@ -98,9 +180,28 @@ draw = function()
 
   ctx.clearRect( 0, 0, f_W, f_H );
 
-  ctx.fillStyle = "rgba( 0, 0, 0, " + transition.level + " )";
+  // draw the temporary arcs
+  if( mode == "Drawing" )
+  {
+    ctx.lineWidth = 2;
 
-  ctx.fillRect( 0, 0, f_W, f_H );
+    ctx.beginPath();
+    ctx.moveTo( nodes[ selectedNodeIdx ].x, nodes[ selectedNodeIdx ].y );
+    ctx.lineTo( curMousePos.X, curMousePos.Y );
+    ctx.closePath();
+
+    ctx.stroke();
+  }
+
+  for( i = 0 ; i < arcs.length ; i++ )
+  {
+    arcs[ i ].draw( ctx );
+  }
+
+  for( i = 0 ; i < nodes.length ; i++ )
+  {
+    nodes[ i ].draw( ctx );
+  }
 
   ctx.restore();
 }
