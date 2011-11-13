@@ -25,7 +25,8 @@ init = function()
   f_W      = h_canvas.width;
   f_H      = h_canvas.height;
 
-  h_canvas.addEventListener( "mousedown", onMouseDown, false );
+  h_canvas.addEventListener( "mousedown", onMouseLeftDown, false );
+  h_canvas.addEventListener( "contextmenu", onMouseRightDown, false );
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
 
@@ -33,7 +34,7 @@ init = function()
   arcs  = new Array( 0 );
 
   // Variables handling state of the UI
-  mode            = "DoingNothing"; // can be "Dragging" or "Drawing" also
+  mode            = "DoingNothing"; // can be "Dragging" or "Drawing" or "Deleting"
   selectedNodeIdx = -1;
   draggedNodeIdx  = -1;
 
@@ -62,23 +63,43 @@ WhatNodeIsHere = function( point )
 }
 
 /* mouse events handlers */
-onMouseDown = function( evt )
+onMouseLeftDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
-  g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
+  var clickNodeIdx = WhatNodeIsHere( cursorPostion );
 
-  draggedNodeIdx = WhatNodeIsHere( cursorPostion );
-
-  if( mode == "DoingNothing" )
+  if( clickNodeIdx >= 0 && mode == "DoingNothing" )
   {
-    if( draggedNodeIdx != -1 )
+    switch( evt.which )
     {
-      mode = "Dragging";
+      case 1: // left click
+        g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
+
+        mode = "Dragging";
+        draggedNodeIdx = clickNodeIdx
+
+        break;
+
+      case 3: // right click
+        mode = "Deleting";
+        break;
     }
   }
 
   mouseDownPos = cursorPostion;
+
+  return true;
+}
+
+onMouseRightDown = function( evt )
+{
+  evt.preventDefault();
+
+  var clickedNode = WhatNodeIsHere( getCursorPos( evt ) );
+
+
+  return true;
 }
 
 onMouseUp = function( evt )
@@ -112,6 +133,28 @@ onMouseUp = function( evt )
     else
     {
       mode = "DoingNothing";
+    }
+  }
+  else if( mode == "Deleting" )
+  {
+    mode = "DoingNothing";
+
+    if( clickedNode >= 0 )
+    {
+      // delete the clicked node and arcs connected to it
+
+      var nodeToDelete = nodes.splice( clickedNode, 1 )[ 0 ];
+
+      for( i = 0 ; i < arcs.length ; i++ )
+      {
+        if( arcs[ i ].IsConnectedTo( nodeToDelete ) )
+        {
+          delete arcs.splice( i, 1 )[ 0 ];
+          i--;
+        }
+      }
+
+      delete nodeToDelete;
     }
   }
   else if( mode == "DoingNothing" )
