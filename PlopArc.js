@@ -13,6 +13,12 @@ function PlopArc( nodeStart, nodeEnd )
 }
 
 
+PlopArc.prototype.IsConnectedTo = function( node )
+{
+  return ( this.nodeStart === node ) || ( this.nodeEnd === node );
+}
+
+
 PlopArc.prototype.draw = function( canvasCtx )
 {
   // TODO take into account click and hover
