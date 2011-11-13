@@ -22,43 +22,6 @@ function PlopNode( x, y )
 }
 
 
-PlopNode.SetHover = function( newHover )
-{
-  if( this.hover != newHover )
-  {
-    /*
-    if( newHover == true )
-    {
-      clickTr.Toggle();
-    }
-    else
-    {
-      clickTr.SetToZero();
-    }
-    */
-    this.hover = newHover;
-  }
-}
-
-PlopNode.SetClick = function( newClick )
-{
-  if( this.click != newClick )
-  {
-    /*
-    if( newClick == true )
-    {
-      clickTr.Toggle();
-    }
-    else
-    {
-      clickTr.SetToZero();
-    }
-    */
-    this.click = newClick;
-  }
-}
-
-
 PlopNode.prototype.SetPos = function( point )
 {
   this.x = point.X;
