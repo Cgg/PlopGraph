@@ -29,8 +29,8 @@ PlopArc.prototype.draw = function( canvasCtx )
   canvasCtx.lineWidth   = this.LINE_WIDTH;
 
   canvasCtx.beginPath();
-  canvasCtx.moveTo( this.nodeStart.x, this.nodeStart.y );
-  canvasCtx.lineTo( this.nodeEnd.x, this.nodeEnd.y );
+  canvasCtx.moveTo( this.nodeStart.center.x, this.nodeStart.center.y );
+  canvasCtx.lineTo( this.nodeEnd.center.x, this.nodeEnd.center.y );
   canvasCtx.closePath();
 
   canvasCtx.stroke();

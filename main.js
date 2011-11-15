@@ -39,8 +39,8 @@ init = function()
   draggedNodeIdx  = -1;
 
   // Variables for handling mouse inputs
-  mouseDownPos = { X : 0, Y : 0 };
-  curMousePos  = { X : 0, Y : 0 };
+  mouseDownPos = new Point( 0, 0 );
+  curMousePos  = new Point( 0, 0 );
 
   setInterval( "draw()", REFRESH_RATE );
 }
@@ -109,8 +109,8 @@ onMouseUp = function( evt )
 
   if( mode == "Dragging" )
   {
-    if( cursorPostion.X == mouseDownPos.X &&
-        cursorPostion.Y == mouseDownPos.Y    )
+    if( cursorPostion.x == mouseDownPos.x &&
+        cursorPostion.y == mouseDownPos.y    )
     {
       mode = "Drawing";
       selectedNodeIdx = draggedNodeIdx;
@@ -158,7 +158,7 @@ onMouseUp = function( evt )
   }
   else if( mode == "DoingNothing" )
   {
-    nodes.push( new PlopNode( cursorPostion.X, cursorPostion.Y ) );
+    nodes.push( new PlopNode( cursorPostion.x, cursorPostion.y ) );
 
     /* if right click and clickedNode != -1 then delete clicked node */
   }
@@ -207,7 +207,7 @@ getCursorPos = function( mouseEvt )
   x -= h_canvas.offsetLeft;
   y -= h_canvas.offsetTop;
 
-  var pos = { X : x, Y : y };
+  var pos = new Point( x, y );
 
   return pos;
 }
@@ -228,8 +228,8 @@ draw = function()
     ctx.lineWidth = 2;
 
     ctx.beginPath();
-    ctx.moveTo( nodes[ selectedNodeIdx ].x, nodes[ selectedNodeIdx ].y );
-    ctx.lineTo( curMousePos.X, curMousePos.Y );
+    ctx.moveTo( nodes[ selectedNodeIdx ].center.x, nodes[ selectedNodeIdx ].center.y );
+    ctx.lineTo( curMousePos.x, curMousePos.y );
     ctx.closePath();
 
     ctx.stroke();

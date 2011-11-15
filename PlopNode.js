@@ -11,8 +11,7 @@ PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
 /* constructor */
 function PlopNode( x, y )
 {
-  this.x = x;
-  this.y = y;
+  this.center = new Point( x, y );
 
   //...
 
@@ -24,15 +23,14 @@ function PlopNode( x, y )
 
 PlopNode.prototype.SetPos = function( point )
 {
-  this.x = point.X;
-  this.y = point.Y;
+  this.center = point;
 }
 
 /* Tells if the point P{X,Y} is in node or not */
 PlopNode.prototype.IsInNode = function( point )
 {
-  return( Math.sqrt( Math.pow( this.x - point.X, 2 ) +
-                     Math.pow( this.y - point.Y, 2 )   ) <= this.RADIUS );
+  return( Math.sqrt( Math.pow( this.center.x - point.x, 2 ) +
+                     Math.pow( this.center.y - point.y, 2 )   ) <= this.RADIUS );
 }
 
 /* Draw a node */
@@ -47,7 +45,7 @@ PlopNode.prototype.draw = function( canvasCtx )
   canvasCtx.lineWidth   = this.LINE_WIDTH;
 
   canvasCtx.beginPath();
-  canvasCtx.arc( this.x, this.y, this.RADIUS, 0, Math.PI*2 );
+  canvasCtx.arc( this.center.x, this.center.y, this.RADIUS, 0, Math.PI*2 );
   canvasCtx.closePath();
 
   canvasCtx.fill();
