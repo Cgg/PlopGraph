@@ -52,21 +52,18 @@ Vector.prototype.Add = function( V )
   return new Vector( this.x + V.x, this.y + V.y );
 }
 
-Vector.prototype.IsColinearWith = function( V )
+Vector.prototype.DotProduct = function( V )
 {
-  if( !V.isNull() || this.isNull() )
-  {
-    var alphaX = V.x / this.x;
-    var alphaY = V.y / this.y;
-
-    return alphaX == alphaY;
-  }
-  else
-  {
-    return true;
-  }
+  return ( this.x * V.x ) + ( this.y * V.y );
 }
 
-Vector.prototype.IsPointOnIt = function( P )
+Vector.prototype.GetColinearityCoeffs = function( V )
 {
+  return [ V.x / this.x, V.y / this.y ];
 }
+
+Vector.prototype.GetNorm = function()
+{
+  return Math.sqrt( Math.pow( this.x, 2 ) + Math.pow( this.y, 2 ) );
+}
+
