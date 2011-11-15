@@ -77,7 +77,7 @@ onMouseLeftDown = function( evt )
         g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
 
         mode = "Dragging";
-        draggedNodeIdx = clickNodeIdx
+        draggedNodeIdx = clickNodeIdx;
 
         break;
 
@@ -97,7 +97,6 @@ onMouseRightDown = function( evt )
   evt.preventDefault();
 
   var clickedNode = WhatNodeIsHere( getCursorPos( evt ) );
-
 
   return true;
 }
