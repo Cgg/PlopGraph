@@ -2,6 +2,8 @@ PlopArc.prototype.STR_COLOR  = "rgba( 0, 0, 0, 1 )";
 
 PlopArc.prototype.LINE_WIDTH = 2;
 
+PlopArc.prototype.DIST_TRESHOLD = 4;
+
 function PlopArc( nodeStart, nodeEnd )
 {
   this.nodeStart = nodeStart;
@@ -16,6 +18,31 @@ function PlopArc( nodeStart, nodeEnd )
 PlopArc.prototype.IsConnectedTo = function( node )
 {
   return ( this.nodeStart === node ) || ( this.nodeEnd === node );
+}
+
+
+/* Return distance of Point point from this arc */
+PlopArc.prototype.DistanceFrom = function( point )
+{
+  /* Compute the distance of point from the arc's segment
+   * If point is within a certain range, return true
+   */
+
+  var arcVec  = Vector.CreateFromPoints( this.nodeStart.center, this.nodeEnd.center );
+  var testVec = Vector.CreateFromPoints( this.nodeStart.center, point );
+
+  var arcVecNorm = arcVec.GetNorm();
+
+  var AH = arcVec.DotProduct( testVec ) / arcVecNorm;
+
+  if( AH < 0  || AH > arcVecNorm )
+  {
+    return undefined;
+  }
+  else
+  {
+    return distPoint = Math.sqrt( Math.pow( testVec.GetNorm(), 2 ) - Math.pow( AH, 2 ) );
+  }
 }
 
 
