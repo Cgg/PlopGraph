@@ -62,12 +62,40 @@ WhatNodeIsHere = function( point )
   return -1;
 }
 
+/* given a point tells if there is an arc there. Return arc index or -1 if
+ * there is nobody. If several arcs are candidate, return the nearest.
+ */
+WhatArcIsHere = function( point )
+{
+  var bestCandidate = -1;
+  var bestDist      = 9001;
+  var curDist       = 0;
+
+  for( i = 0 ; i < arcs.length ; i++ )
+  {
+    curDist = arcs[ i ].DistanceFrom( point );
+
+    if( ( curDist <= PlopArc.prototype.DIST_TRESHOLD ) && ( curDist < bestDist ) )
+    {
+      bestCandidate = i;
+    }
+  }
+
+  return bestCandidate;
+}
+
 /* mouse events handlers */
 onMouseLeftDown = function( evt )
 {
   var cursorPostion = getCursorPos( evt );
 
   var clickNodeIdx = WhatNodeIsHere( cursorPostion );
+  var clickArcIdx  = -1;
+
+  if( clickNodeIdx == -1 )
+  {
+    clickArcIdx = WhatArcIsHere( cursorPostion );
+  }
 
   if( clickNodeIdx >= 0 && mode == "DoingNothing" )
   {
@@ -82,6 +110,15 @@ onMouseLeftDown = function( evt )
         break;
 
       case 3: // right click
+        mode = "Deleting";
+        break;
+    }
+  }
+  else if( clickArcIdx >= 0 && mode == "DoingNothing" )
+  {
+    switch( evt.which )
+    {
+      case 3:
         mode = "Deleting";
         break;
     }
@@ -106,6 +143,12 @@ onMouseUp = function( evt )
   var cursorPostion = getCursorPos( evt );
 
   var clickedNode = WhatNodeIsHere( cursorPostion );
+  var clickedArc  = -1;
+
+  if( clickedNode == -1 )
+  {
+    clickedArc = WhatArcIsHere( cursorPostion );
+  }
 
   if( mode == "Dragging" )
   {
@@ -122,7 +165,7 @@ onMouseUp = function( evt )
   }
   else if( mode == "Drawing" )
   {
-    if( clickedNode != -1 )
+    if( clickedNode != -1 && clickedNode != selectedNodeIdx )
     {
       arcs.push( new PlopArc( nodes[ selectedNodeIdx ],
                               nodes[ clickedNode ]      ) );
@@ -148,15 +191,20 @@ onMouseUp = function( evt )
       {
         if( arcs[ i ].IsConnectedTo( nodeToDelete ) )
         {
-          delete arcs.splice( i, 1 )[ 0 ];
+          arcs.splice( i, 1 )[ 0 ];
           i--;
         }
       }
+    }
+    else if ( clickedArc >= 0 )
+    {
+      mode = "DoingNothing";
 
-      delete nodeToDelete;
+      // delete clicked arc
+      arcs.splice( clickedArc, 1 )[ 0 ];
     }
   }
-  else if( mode == "DoingNothing" )
+  else if( mode == "DoingNothing" && clickedNode == -1 && clickedArc == -1 )
   {
     nodes.push( new PlopNode( cursorPostion.x, cursorPostion.y ) );
 
