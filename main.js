@@ -204,9 +204,20 @@ onMouseUp = function( evt )
       arcs.splice( clickedArc, 1 )[ 0 ];
     }
   }
-  else if( mode == "DoingNothing" && clickedNode == -1 && clickedArc == -1 )
+  else if( mode == "DoingNothing" && evt.which == 1 &&
+           clickedNode == -1 )
   {
-    nodes.push( new PlopNode( cursorPostion.x, cursorPostion.y ) );
+    var nodeToInsert = new PlopNode( cursorPostion.x, cursorPostion.y );
+
+    if( clickedArc >= 0 )
+    {
+      var cuttedArc = arcs.splice( clickedArc, 1 )[ 0 ];
+
+      arcs.push( new PlopArc( cuttedArc.nodeStart, nodeToInsert ) );
+      arcs.push( new PlopArc( nodeToInsert, cuttedArc.nodeEnd ) );
+    }
+
+    nodes.push( nodeToInsert );
 
     /* if right click and clickedNode != -1 then delete clicked node */
   }
