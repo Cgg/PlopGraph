@@ -2,7 +2,7 @@ PlopArc.prototype.STR_COLOR  = "rgba( 0, 0, 0, 1 )";
 
 PlopArc.prototype.LINE_WIDTH = 2;
 
-PlopArc.prototype.DIST_TRESHOLD = 4;
+PlopArc.prototype.DIST_TRESHOLD = 10;
 
 function PlopArc( nodeStart, nodeEnd )
 {
