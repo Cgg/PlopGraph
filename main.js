@@ -307,3 +307,7 @@ draw = function()
   ctx.restore();
 }
 
+document.onselectstart = function()
+{
+  return false;
+};
