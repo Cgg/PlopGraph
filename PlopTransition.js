@@ -37,21 +37,21 @@ PlopTransition.prototype.Toggle = function()
   }
 
   setTimeout( PlopDelegate( this, this.Update ), this.DT );
-}
+};
 
 PlopTransition.prototype.SetToZero = function()
 {
   this.direction = this.BWD;
   this.level     = 0;
   this.curTime   = 0;
-}
+};
 
 PlopTransition.prototype.SetToOne = function()
 {
   this.direction = this.FWD;
   this.level     = 1;
   this.curTime   = this.duration;
-}
+};
 
 PlopTransition.prototype.Update = function()
 {
@@ -84,10 +84,10 @@ PlopTransition.prototype.Update = function()
       this.SetToZero();
     }
   }
-}
+};
 
 PlopTransition.prototype.TimeToLevel = function()
 {
   // linear for the moment
   this.level = this.curTime / this.duration;
-}
+};

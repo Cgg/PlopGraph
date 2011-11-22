@@ -24,14 +24,14 @@ function PlopNode( x, y )
 PlopNode.prototype.SetPos = function( point )
 {
   this.center = point;
-}
+};
 
 /* Tells if the point P{X,Y} is in node or not */
 PlopNode.prototype.IsInNode = function( point )
 {
   return( Math.sqrt( Math.pow( this.center.x - point.x, 2 ) +
                      Math.pow( this.center.y - point.y, 2 )   ) <= this.RADIUS );
-}
+};
 
 /* Draw a node */
 PlopNode.prototype.draw = function( canvasCtx )
@@ -52,4 +52,4 @@ PlopNode.prototype.draw = function( canvasCtx )
   canvasCtx.stroke();
 
   canvasCtx.restore();
-}
+};
