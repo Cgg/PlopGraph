@@ -1,3 +1,7 @@
+/* Physics constants */
+PlopNode.prototype.MASS     = 1;  // kg. Whatever.
+PlopNode.prototype.FRICTION = 10; // N.s/m. Yup.
+
 PlopNode.prototype.TRANSITION = 125; // ms
 
 /* graphic constants */
@@ -31,6 +35,11 @@ PlopNode.prototype.IsInNode = function( point )
 {
   return( Math.sqrt( Math.pow( this.center.x - point.x, 2 ) +
                      Math.pow( this.center.y - point.y, 2 )   ) <= this.RADIUS );
+};
+
+/* Update positions of a node, doing complex physics stuff */
+PlopNode.prototype.update = function( dt )
+{
 };
 
 /* Draw a node */
