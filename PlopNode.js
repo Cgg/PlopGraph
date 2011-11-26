@@ -15,7 +15,10 @@ PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
 /* constructor */
 function PlopNode( x, y, anchored )
 {
-  this.center = new Point( x, y );
+  /* Physics properties */
+  this.center       = new Point( x, y );
+  this.velocity     = new Vector( 0, 0 );
+  this.acceleration = new Vector( 0, 0 );
 
   //...
 
