@@ -23,8 +23,15 @@ function PlopNode( x, y, anchored )
   this.click    = false;
   this.hover    = false;
   this.selected = false;
+
+  this.arcs     = new Array( 0 );
 }
 
+
+PlopNode.prototype.AddArc = function( arc )
+{
+  this.arcs.push( arc );
+};
 
 PlopNode.prototype.SetPos = function( point )
 {
