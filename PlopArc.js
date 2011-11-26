@@ -1,3 +1,6 @@
+/* Physics constant */
+PlopArc.prototype.BASE_LENGTH = 6 * PlopNode.prototype.RADIUS;
+
 PlopArc.prototype.STR_COLOR  = "rgba( 0, 0, 0, 1 )";
 
 PlopArc.prototype.LINE_WIDTH = 2;
