@@ -19,7 +19,7 @@ function PlopNode( x, y, anchored )
 
   //...
 
-  this.anchored = anchored;
+  this.anchored = anchored || false;
   this.click    = false;
   this.hover    = false;
   this.selected = false;
