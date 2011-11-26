@@ -13,12 +13,13 @@ PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
 
 
 /* constructor */
-function PlopNode( x, y )
+function PlopNode( x, y, anchored )
 {
   this.center = new Point( x, y );
 
   //...
 
+  this.anchored = anchored;
   this.click    = false;
   this.hover    = false;
   this.selected = false;
