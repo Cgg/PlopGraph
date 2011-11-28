@@ -51,6 +51,16 @@ PlopNode.prototype.IsInNode = function( point )
 /* Update positions of a node, doing complex physics stuff */
 PlopNode.prototype.update = function( dt )
 {
+  if( !( this.click || this.anchored ) )
+  {
+    // compute acceleration
+ 
+    // update velocity
+
+    // update center's position
+
+    // this.center.
+  }
 };
 
 /* Draw a node */
