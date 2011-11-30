@@ -181,8 +181,13 @@ onMouseUp = function( evt )
   {
     if( clickedNode != -1 && clickedNode != selectedNodeIdx )
     {
-      arcs.push( new PlopArc( nodes[ selectedNodeIdx ],
-                              nodes[ clickedNode ]      ) );
+      var arcToInsert = new PlopArc( nodes[ selectedNodeIdx ],
+                              nodes[ clickedNode ] );
+
+      arcs.push( arcToInsert );
+
+      nodes[ selectedNodeIdx ].AddArc( arcToInsert );
+      nodes[ clickedNode ].AddArc( arcToInsert );
 
       selectedNodeIdx = clickedNode;
     }
