@@ -29,6 +29,7 @@ init = function()
   h_canvas.addEventListener( "contextmenu", onMouseRightDown, false );
   h_canvas.addEventListener( "mouseup"  , onMouseUp  , false );
   h_canvas.addEventListener( "mousemove", onMouseMove, false );
+  window.addEventListener( "keyup", onKeyUp, false );
 
   nodes = new Array( 0 );
   arcs  = new Array( 0 );
@@ -37,6 +38,8 @@ init = function()
   mode            = "DoingNothing"; // can be "Dragging" or "Drawing" or "Deleting"
   selectedNodeIdx = -1;
   draggedNodeIdx  = -1;
+
+  createAnchored = true;
 
   // Variables for handling mouse inputs
   mouseDownPos = new Point( 0, 0 );
@@ -83,6 +86,19 @@ WhatArcIsHere = function( point )
 
   return bestCandidate;
 };
+
+
+/* keyboard handler */
+onKeyUp = function( evt )
+{
+  evt.preventDefault();
+
+  if( evt.keyCode == 65 )
+  {
+    createAnchored = !createAnchored;
+  }
+}
+
 
 /* mouse events handlers */
 onMouseLeftDown = function( evt )
@@ -205,7 +221,8 @@ onMouseUp = function( evt )
   else if( mode == "DoingNothing" && evt.which == 1 &&
            clickedNode == -1 )
   {
-    var nodeToInsert = new PlopNode( cursorPostion.x, cursorPostion.y );
+    var nodeToInsert = new PlopNode( cursorPostion.x, cursorPostion.y,
+                                     createAnchored );
 
     if( clickedArc >= 0 )
     {
@@ -298,6 +315,15 @@ draw = function()
   for( i = 0 ; i < nodes.length ; i++ )
   {
     nodes[ i ].draw( ctx );
+  }
+
+  if( createAnchored )
+  {
+    ctx.fillText( "creating anchored nodes", 1, 10 );
+  }
+  else
+  {
+    ctx.fillText( "creating free nodes", 1, 10 );
   }
 
   ctx.restore();
