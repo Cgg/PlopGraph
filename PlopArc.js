@@ -18,7 +18,7 @@ function PlopArc( nodeStart, nodeEnd )
 PlopArc.prototype.IsConnectedTo = function( node )
 {
   return ( this.nodeStart === node ) || ( this.nodeEnd === node );
-}
+};
 
 
 /* Return distance of Point point from this arc */
@@ -41,9 +41,9 @@ PlopArc.prototype.DistanceFrom = function( point )
   }
   else
   {
-    return distPoint = Math.sqrt( Math.pow( testVec.GetNorm(), 2 ) - Math.pow( AH, 2 ) );
+    return Math.sqrt( Math.pow( testVec.GetNorm(), 2 ) - Math.pow( AH, 2 ) );
   }
-}
+};
 
 
 PlopArc.prototype.draw = function( canvasCtx )
@@ -63,4 +63,4 @@ PlopArc.prototype.draw = function( canvasCtx )
   canvasCtx.stroke();
 
   canvasCtx.restore();
-}
+};

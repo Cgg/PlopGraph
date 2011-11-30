@@ -42,8 +42,8 @@ init = function()
   mouseDownPos = new Point( 0, 0 );
   curMousePos  = new Point( 0, 0 );
 
-  setInterval( "draw()", REFRESH_RATE );
-}
+  setInterval( draw(), REFRESH_RATE );
+};
 
 
 /* given a point tells if there is a node there. Return node index or -1 if
@@ -60,7 +60,7 @@ WhatNodeIsHere = function( point )
   }
 
   return -1;
-}
+};
 
 /* given a point tells if there is an arc there. Return arc index or -1 if
  * there is nobody. If several arcs are candidate, return the nearest.
@@ -82,7 +82,7 @@ WhatArcIsHere = function( point )
   }
 
   return bestCandidate;
-}
+};
 
 /* mouse events handlers */
 onMouseLeftDown = function( evt )
@@ -102,7 +102,7 @@ onMouseLeftDown = function( evt )
     switch( evt.which )
     {
       case 1: // left click
-        g_m_timer = setTimeout( "mouseMoveTimeout()", MOUSE_T_OUT );
+        g_m_timer = setTimeout( mouseMoveTimeout(), MOUSE_T_OUT );
 
         mode = "Dragging";
         draggedNodeIdx = clickNodeIdx;
@@ -116,25 +116,23 @@ onMouseLeftDown = function( evt )
   }
   else if( clickArcIdx >= 0 && mode == "DoingNothing" )
   {
-    switch( evt.which )
+    if( evt.which == 3 )
     {
-      case 3:
-        mode = "Deleting";
-        break;
+      mode = "Deleting";
     }
   }
 
   mouseDownPos = cursorPostion;
 
   return true;
-}
+};
 
 onMouseRightDown = function( evt )
 {
   evt.preventDefault();
 
   return true;
-}
+};
 
 onMouseUp = function( evt )
 {
@@ -189,7 +187,7 @@ onMouseUp = function( evt )
       {
         if( arcs[ i ].IsConnectedTo( nodeToDelete ) )
         {
-          arcs.splice( i, 1 )[ 0 ];
+          arcs.splice( i, 1 );
           i--;
         }
       }
@@ -199,7 +197,7 @@ onMouseUp = function( evt )
       mode = "DoingNothing";
 
       // delete clicked arc
-      arcs.splice( clickedArc, 1 )[ 0 ];
+      arcs.splice( clickedArc, 1 );
     }
   }
   else if( mode == "DoingNothing" && evt.which == 1 &&
@@ -217,7 +215,7 @@ onMouseUp = function( evt )
 
     nodes.push( nodeToInsert );
   }
-}
+};
 
 onMouseMove = function( evt )
 {
@@ -231,11 +229,11 @@ onMouseMove = function( evt )
   {
     nodes[ draggedNodeIdx ].SetPos( cursorPostion );
   }
-}
+};
 
 mouseMoveTimeout = function()
 {
-}
+};
 
 /* Compute cursor postion from a mouse event */
 getCursorPos = function( mouseEvt )
@@ -243,7 +241,7 @@ getCursorPos = function( mouseEvt )
   var x;
   var y;
 
-  if( mouseEvt.pageX != undefined && mouseEvt.pageY != undefined )
+  if( mouseEvt.pageX !== undefined && mouseEvt.pageY !== undefined )
   {
     x = mouseEvt.pageX;
     y = mouseEvt.pageY;
@@ -263,7 +261,7 @@ getCursorPos = function( mouseEvt )
   var pos = new Point( x, y );
 
   return pos;
-}
+};
 
 
 /* Responsible for drawing everything on the screen */
@@ -299,7 +297,7 @@ draw = function()
   }
 
   ctx.restore();
-}
+};
 
 document.onselectstart = function()
 {
