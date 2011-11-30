@@ -8,8 +8,9 @@ PlopNode.prototype.TRANSITION = 125; // ms
 PlopNode.prototype.RADIUS     = 10; // px
 PlopNode.prototype.LINE_WIDTH = 2;
 
-PlopNode.prototype.STR_COLOR = "rgba( 0, 0, 0, 1 )";
-PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
+PlopNode.prototype.STR_COLOR      = "rgba( 0, 0, 0, 1 )";
+PlopNode.prototype.FIL_FREE_COLOR = "rgba( 255, 255, 255, 1 )";
+PlopNode.prototype.FIL_ANCH_COLOR = "rgba( 202, 252, 202, 1 )";
 
 
 /* constructor */
@@ -71,7 +72,8 @@ PlopNode.prototype.draw = function( canvasCtx )
   canvasCtx.save();
 
   canvasCtx.strokeStyle = this.STR_COLOR;
-  canvasCtx.fillStyle   = this.FIL_COLOR;
+  canvasCtx.fillStyle   = ( this.anchored ? this.FIL_ANCH_COLOR :
+                                            this.FIL_FREE_COLOR );
   canvasCtx.lineWidth   = this.LINE_WIDTH;
 
   canvasCtx.beginPath();
