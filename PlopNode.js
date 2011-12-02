@@ -1,6 +1,6 @@
 /* Physics constants */
 PlopNode.prototype.MASS     = 1;  // kg. Whatever.
-PlopNode.prototype.FRICTION = 0.1; // N.s/m. Yup.
+PlopNode.prototype.FRICTION = 1; // N.s/m. Yup.
 
 PlopNode.prototype.TRANSITION = 125; // ms
 
