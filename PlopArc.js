@@ -36,7 +36,7 @@ PlopArc.prototype.GetForceAppliedTo = function( node )
   var norm = vector.GetNorm();
   var DL   = norm - this.BASE_LENGTH;
 
-  vector.MultiplyByScalar( this.K * DL / norm );
+  vector = vector.MultiplyByScalar( this.K * DL / norm );
 
   if( node == this.nodeStart )
   {
