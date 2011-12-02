@@ -147,8 +147,6 @@ onMouseRightDown = function( evt )
 {
   evt.preventDefault();
 
-  var clickedNode = WhatNodeIsHere( getCursorPos( evt ) );
-
   return true;
 };
 
@@ -247,8 +245,6 @@ onMouseMove = function( evt )
 
   // if a node is being dragged around, drag it
 
-  // If a node is selected (and an arc drawn from it) then check if an arc
-  // must be added in the temporary arcs list.
   curMousePos = cursorPostion;
 
   if( mode == "Dragging" )
