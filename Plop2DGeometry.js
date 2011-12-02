@@ -28,6 +28,8 @@ Point.prototype.TranslateBy = function( vector )
 
 /* class Vector
  *
+ * A Vector instance is immutable, that is V1.Add( V2 ) wont modify V1 but
+ * return V3 = V1 + V3 instead.
  */
 
 Vector.CreateFromPoints = function( P1, P2 )
@@ -48,14 +50,12 @@ Vector.prototype.isNull = function()
 
 Vector.prototype.MultiplyByScalar = function( alpha )
 {
-  this.x * alpha;
-  this.y * alpha;
+  return new Vector( this.x * alpha, this.y * alpha );
 };
 
 Vector.prototype.Add = function( V )
 {
-  this.x + V.x;
-  this.y + V.y;
+  return new Vector( this.x + V.x, this.y + V.y );
 };
 
 Vector.prototype.DotProduct = function( V )
