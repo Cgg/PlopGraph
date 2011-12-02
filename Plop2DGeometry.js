@@ -22,8 +22,6 @@ function Point( X, Y )
 
 /* class Vector
  *
- * A Vector instance is immutable, that is V1.Add( V2 ) wont modify V1 but
- * return V3 = V1 + V3 instead.
  */
 
 Vector.CreateFromPoints = function( P1, P2 )
@@ -44,12 +42,14 @@ Vector.prototype.isNull = function()
 
 Vector.prototype.MultiplyByScalar = function( alpha )
 {
-  return new Vector( this.x * alpha, this.y * alpha );
+  this.x * alpha;
+  this.y * alpha;
 };
 
 Vector.prototype.Add = function( V )
 {
-  return new Vector( this.x + V.x, this.y + V.y );
+  this.x + V.x;
+  this.y + V.y;
 };
 
 Vector.prototype.DotProduct = function( V )
