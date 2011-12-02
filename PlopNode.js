@@ -45,6 +45,11 @@ PlopNode.prototype.SetPos = function( point )
   this.center = point;
 };
 
+PlopNode.prototype.SetClicked = function( clicked )
+{
+  this.click = clicked;
+}
+
 /* Tells if the point P{X,Y} is in node or not */
 PlopNode.prototype.IsInNode = function( point )
 {

@@ -123,6 +123,8 @@ onMouseLeftDown = function( evt )
         mode = "Dragging";
         draggedNodeIdx = clickNodeIdx;
 
+        nodes[ draggedNodeIdx ].SetClicked( true );
+
         break;
 
       case 3: // right click
@@ -176,6 +178,8 @@ onMouseUp = function( evt )
     {
       mode = "DoingNothing";
     }
+
+    nodes[ draggedNodeIdx ].SetClicked( false );
   }
   else if( mode == "Drawing" )
   {
