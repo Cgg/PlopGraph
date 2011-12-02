@@ -42,7 +42,7 @@ init = function()
   mouseDownPos = new Point( 0, 0 );
   curMousePos  = new Point( 0, 0 );
 
-  setInterval( draw(), REFRESH_RATE );
+  setInterval( draw, REFRESH_RATE );
 };
 
 
