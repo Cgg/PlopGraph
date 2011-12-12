@@ -1,4 +1,6 @@
 /* Physics constants */
+PlopNode.prototype.curIdx = 0;
+
 PlopNode.prototype.MASS     = 1;  // kg. Whatever.
 PlopNode.prototype.FRICTION = 1; // N.s/m. Yup.
 
@@ -18,6 +20,10 @@ PlopNode.prototype.FIL_ANCH_COLOR = "rgba( 202, 252, 202, 1 )";
 /* constructor */
 function PlopNode( x, y, anchored )
 {
+  this.idx = PlopNode.prototype.curIdx;
+
+  PlopNode.prototype.curIdx += 1;
+
   /* Physics properties */
   this.center       = new Point( x, y );
   this.velocity     = new Vector( 0, 0 );

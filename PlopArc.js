@@ -1,4 +1,6 @@
 /* Physics constant */
+PlopArc.prototype.curIdx = 0;
+
 PlopArc.prototype.BASE_LENGTH = 6 * PlopNode.prototype.RADIUS;
 PlopArc.prototype.K = 20;
 
@@ -10,6 +12,12 @@ PlopArc.prototype.DIST_TRESHOLD = 10;
 
 function PlopArc( nodeStart, nodeEnd )
 {
+  this.idx = PlopArc.prototype.curIdx;
+
+  PlopArc.prototype.curIdx += 1;
+
+  this.curIdx += 1;
+
   this.nodeStart = nodeStart;
   this.nodeEnd   = nodeEnd;
 
