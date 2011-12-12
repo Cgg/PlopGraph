@@ -79,3 +79,8 @@ PlopNode.prototype.clone = function()
 
   return newObj;
 };
+
+PlopNode.prototype.toString = function()
+{
+  return JSON.stringify( this.clone() );
+};
