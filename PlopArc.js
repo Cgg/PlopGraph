@@ -104,3 +104,29 @@ PlopArc.prototype.draw = function( canvasCtx )
 
   canvasCtx.restore();
 };
+
+// clone a arc, keeping only some properties
+PlopArc.prototype.clone = function()
+{
+  var newObj = (this instanceof Array) ? [] : {};
+
+  for (var i in this)
+  {
+    if( i == 'idx' )
+    {
+      if (this[i] && typeof this[i] == "object")
+      {
+        newObj[i] = this[i].clone();
+      }
+      else
+      {
+        newObj[i] = this[i];
+      }
+    }
+  }
+
+  newObj.nodeStartIdx = this.nodeStart.idx;
+  newObj.nodeEndIdx   = this.nodeEnd.idx;
+
+  return newObj;
+};
