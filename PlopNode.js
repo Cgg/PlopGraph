@@ -17,6 +17,8 @@ function PlopNode( x, y )
 
   this.idx = PlopNode.prototype.curIdx;
 
+  PlopNode.prototype.curIdx += 1;
+
   //...
 
   this.click    = false;
