@@ -130,3 +130,8 @@ PlopArc.prototype.clone = function()
 
   return newObj;
 };
+
+PlopArc.prototype.toString = function()
+{
+  return JSON.stringify( this.clone() );
+};
