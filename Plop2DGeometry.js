@@ -19,12 +19,6 @@ function Point( X, Y )
   this.y = Y;
 }
 
-Point.prototype.TranslateBy = function( vector )
-{
-  this.x = this.x + vector.x;
-  this.y = this.y + vector.y;
-}
-
 
 /* class Vector
  *

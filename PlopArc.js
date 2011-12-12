@@ -1,7 +1,3 @@
-/* Physics constant */
-PlopArc.prototype.BASE_LENGTH = 6 * PlopNode.prototype.RADIUS;
-PlopArc.prototype.K = 20;
-
 PlopArc.prototype.STR_COLOR  = "rgba( 0, 0, 0, 1 )";
 
 PlopArc.prototype.LINE_WIDTH = 2;
@@ -23,34 +19,6 @@ PlopArc.prototype.IsConnectedTo = function( node )
 {
   return ( this.nodeStart === node ) || ( this.nodeEnd === node );
 };
-
-
-/* Return the force applied to a node. If node is neither nodeStart nor
- * nodeEnd the null vector is returned
- */
-PlopArc.prototype.GetForceAppliedTo = function( node )
-{
-  var vector = Vector.CreateFromPoints( this.nodeStart.center,
-                                        this.nodeEnd.center );
-
-  var norm = vector.GetNorm();
-  var DL   = norm - this.BASE_LENGTH;
-
-  vector = vector.MultiplyByScalar( this.K * DL / norm );
-
-  if( node == this.nodeStart )
-  {
-    return vector;
-  }
-  else if( node == this.nodeEnd )
-  {
-    return vector.MultiplyByScalar( -1 );
-  }
-  else
-  {
-    return new Vector( 0, 0 );
-  }
-}
 
 
 /* Return distance of Point point from this arc */
