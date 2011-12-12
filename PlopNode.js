@@ -1,3 +1,5 @@
+PlopNode.prototype.curIdx = 0;
+
 PlopNode.prototype.TRANSITION = 125; // ms
 
 /* graphic constants */
@@ -12,6 +14,8 @@ PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
 function PlopNode( x, y )
 {
   this.center = new Point( x, y );
+
+  this.idx = PlopNode.prototype.curIdx;
 
   //...
 
