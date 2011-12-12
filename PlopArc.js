@@ -58,7 +58,7 @@ PlopArc.prototype.GetForceAppliedTo = function( node )
   {
     return new Vector( 0, 0 );
   }
-}
+};
 
 
 /* Return distance of Point point from this arc */

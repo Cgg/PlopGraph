@@ -97,7 +97,7 @@ onKeyUp = function( evt )
   {
     createAnchored = !createAnchored;
   }
-}
+};
 
 
 /* mouse events handlers */
