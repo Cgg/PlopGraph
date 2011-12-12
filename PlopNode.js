@@ -53,3 +53,29 @@ PlopNode.prototype.draw = function( canvasCtx )
 
   canvasCtx.restore();
 };
+
+// clone a node, keeping only some properties
+PlopNode.prototype.clone = function()
+{
+  var newObj = (this instanceof Array) ? [] : {};
+
+  for (var i in this)
+  {
+    if( i == 'idx'      ||
+        i == 'center'   ||
+        i == 'velocity' ||
+        i == 'anchored' )
+    {
+      if (this[i] && typeof this[i] == "object")
+      {
+        newObj[i] = this[i].clone();
+      }
+      else
+      {
+        newObj[i] = this[i];
+      }
+    }
+  }
+
+  return newObj;
+};
