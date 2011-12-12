@@ -46,6 +46,46 @@ init = function()
 };
 
 
+GraphSave = function()
+{
+  localStorage.setItem( "nodes", nodes );
+  localStorage.setItem( "arcs", arcs );
+};
+
+GraphLoad = function()
+{
+  var nodesToRestore = JSON.parse( "[" + localStorage.getItem( "nodes" ) + "]" );
+  var arcsToRestore  = JSON.parse( "[" + localStorage.getItem( "arcs" ) + "]" );
+
+  nodes = new Array( 0 );
+  arcs  = new Array( 0 );
+
+  // for each save arc, we look if the connected nodes (nodeStart and End) have
+  // already been reconstructed - if not they are - and then we rebuild the arc.
+  for( var a = 0 ; a < arcsToRestore.length ; a++ )
+  {
+    var sNodeIdx = arcsToRestore[ a ].nodeStartIdx;
+    var eNodeIdx = arcsToRestore[ a ].nodeEndIdx;
+
+    if( nodes[ sNodeIdx ] === undefined )
+    {
+      nodes[ sNodeIdx ] = new PlopNode( nodesToRestore[ sNodeIdx ].center.x,
+                                        nodesToRestore[ sNodeIdx ].center.y );
+
+    }
+
+    if( nodes[ eNodeIdx ] === undefined )
+    {
+      nodes[ eNodeIdx ] = new PlopNode( nodesToRestore[ eNodeIdx ].center.x,
+                                        nodesToRestore[ eNodeIdx ].center.y );
+
+    }
+
+    arcs.push( new PlopArc( nodes[ sNodeIdx ], nodes[ eNodeIdx ] ) );
+  }
+};
+
+
 /* given a point tells if there is a node there. Return node index or -1 if
  * there is nobody
  */
