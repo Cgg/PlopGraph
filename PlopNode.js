@@ -11,13 +11,22 @@ PlopNode.prototype.FIL_COLOR = "rgba( 255, 255, 255, 1 )";
 
 
 /* constructor */
-function PlopNode( x, y )
+function PlopNode( x, y, idx )
 {
   this.center = new Point( x, y );
 
-  this.idx = PlopNode.prototype.curIdx;
+  if( idx === undefined )
+  {
+    this.idx = PlopNode.prototype.curIdx;
 
-  PlopNode.prototype.curIdx += 1;
+    PlopNode.prototype.curIdx += 1;
+  }
+  else
+  {
+    this.idx = idx;
+
+    PlopNode.prototype.curIdx = Math.max( this.idx + 1, PlopNode.prototype.curIdx );
+  }
 
   //...
 

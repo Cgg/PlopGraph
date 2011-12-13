@@ -67,21 +67,70 @@ GraphLoad = function()
     var sNodeIdx = arcsToRestore[ a ].nodeStartIdx;
     var eNodeIdx = arcsToRestore[ a ].nodeEndIdx;
 
-    if( nodes[ sNodeIdx ] === undefined )
-    {
-      nodes[ sNodeIdx ] = new PlopNode( nodesToRestore[ sNodeIdx ].center.x,
-                                        nodesToRestore[ sNodeIdx ].center.y );
+    var nodeStart = undefined;
+    var nodeEnd   = undefined;
 
+    for( var n = 0 ; n < nodesToRestore.length ; n++ )
+    {
+      if( nodesToRestore[ n ].idx === sNodeIdx )
+      {
+        nodeStart = new PlopNode( nodesToRestore[ n ].center.x,
+                                  nodesToRestore[ n ].center.y,
+                                  nodesToRestore[ n ].idx );
+
+        nodesToRestore.splice( n, 1 );
+        n--;
+
+        continue;
+      }
+
+      if( nodesToRestore[ n ].idx === eNodeIdx )
+      {
+        nodeEnd = new PlopNode( nodesToRestore[ n ].center.x,
+                                nodesToRestore[ n ].center.y,
+                                nodesToRestore[ n ].idx );
+
+        nodesToRestore.splice( n, 1 );
+        n--;
+
+        continue;
+      }
     }
 
-    if( nodes[ eNodeIdx ] === undefined )
-    {
-      nodes[ eNodeIdx ] = new PlopNode( nodesToRestore[ eNodeIdx ].center.x,
-                                        nodesToRestore[ eNodeIdx ].center.y );
+    // if nodeStart or End are undefined then they are already constructed
 
+    if( nodeStart === undefined )
+    {
+      nodeStart = FindNode( sNodeIdx );
     }
 
-    arcs.push( new PlopArc( nodes[ sNodeIdx ], nodes[ eNodeIdx ] ) );
+    if( nodeEnd === undefined )
+    {
+      nodeStart = FindNode( eNodeIdx );
+    }
+
+    arcs.push( new PlopArc( nodeStart, nodeEnd ) );
+    nodes.push( nodeStart );
+    nodes.push( nodeEnd );
+  }
+
+  // restore lone nodes
+  for( var i = 0 ; i < nodesToRestore.length ; i++ )
+  {
+    nodes.push( new PlopNode( nodesToRestore[ i ].center.x,
+                              nodesToRestore[ i ].center.y,
+                              nodesToRestore[ i ].idx ) );
+  }
+};
+
+FindNode = function( idx )
+{
+  for( var n = 0 ; n < nodes.length ; n++ )
+  {
+    if( nodes[ n ].idx === idx )
+    {
+      return nodes[ n ];
+    }
   }
 };
 
