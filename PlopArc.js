@@ -12,8 +12,6 @@ function PlopArc( nodeStart, nodeEnd )
 
   PlopArc.prototype.curIdx += 1;
 
-  this.curIdx += 1;
-
   this.nodeStart = nodeStart;
   this.nodeEnd   = nodeEnd;
 
