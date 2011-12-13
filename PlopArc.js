@@ -1,4 +1,4 @@
-PlopArc.prototype.curIdx = 0;
+PlopArc.prototype.nextIdx = 0;
 
 PlopArc.prototype.STR_COLOR  = "rgba( 0, 0, 0, 1 )";
 
@@ -8,9 +8,9 @@ PlopArc.prototype.DIST_TRESHOLD = 10;
 
 function PlopArc( nodeStart, nodeEnd )
 {
-  this.idx = PlopArc.prototype.curIdx;
+  this.idx = PlopArc.prototype.nextIdx;
 
-  PlopArc.prototype.curIdx += 1;
+  PlopArc.prototype.nextIdx += 1;
 
   this.nodeStart = nodeStart;
   this.nodeEnd   = nodeEnd;

@@ -1,4 +1,4 @@
-PlopNode.prototype.curIdx = 0;
+PlopNode.prototype.nextIdx = 0;
 
 PlopNode.prototype.TRANSITION = 125; // ms
 
@@ -17,15 +17,15 @@ function PlopNode( x, y, idx )
 
   if( idx === undefined )
   {
-    this.idx = PlopNode.prototype.curIdx;
+    this.idx = PlopNode.prototype.nextIdx;
 
-    PlopNode.prototype.curIdx += 1;
+    PlopNode.prototype.nextIdx += 1;
   }
   else
   {
     this.idx = idx;
 
-    PlopNode.prototype.curIdx = Math.max( this.idx + 1, PlopNode.prototype.curIdx );
+    PlopNode.prototype.nextIdx = Math.max( this.idx + 1, PlopNode.prototype.nextIdx );
   }
 
   //...
